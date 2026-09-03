@@ -15,7 +15,7 @@ typedef struct {
 
 // Estrutura para armazenar a lista de tarefas
 typedef struct {
-    Tasks task[MAX_TASKS];
+    Tasks taskk[MAX_TASKS];
     int quantity;
 } ListTasks;
 

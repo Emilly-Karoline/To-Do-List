@@ -16,17 +16,19 @@ bool list_add(ListTasks *list, const char *description)
     if (description[0] == '\0') {
         return false;}
 
-    if (list->quantity > 0) {
-        for (int i = 0; i < list->quantity; i++) {
-            if (strcmp(list->task[i].description, description) == 0) {
-                return false;}}}
-    else {
-        strncpy(list->task[list->quantity].description, description, MAX_TEXT - 1);
-        list->task[list->quantity].description[MAX_TEXT - 1] = '\0'; 
-        list->task[list->quantity].completed = false;
-        list->quantity++; }
+    for (int i = 0; i < list->quantity; i++) {
+        if (strcmp(list->taskk[i].description, description) == 0) {
+            return false;
+        }
+    }
 
-    return true;}
+    strncpy(list->taskk[list->quantity].description, description, MAX_TEXT - 1);
+    list->taskk[list->quantity].description[MAX_TEXT - 1] = '\0';
+    list->taskk[list->quantity].completed = false;
+    list->quantity++;
+
+    return true;
+}
 
 bool list_remove(ListTasks *list, int indice)
 {
@@ -34,7 +36,7 @@ bool list_remove(ListTasks *list, int indice)
         return false; }
 
     for (int i = indice; i < list->quantity - 1; i++) {
-        list->task[i] = list->task[i + 1];}
+        list->taskk[i] = list->taskk[i + 1];}
 
     list->quantity--;
     return true;}
@@ -44,7 +46,7 @@ bool list_completed(ListTasks *list, int indice)
     if (indice < 0 || indice >= list->quantity) {
         return false; }
 
-    list->task[indice].completed = true;
+    list->taskk[indice].completed = true;
     return true;}
 
 void list_clear(ListTasks *list)

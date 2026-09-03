@@ -2,18 +2,30 @@
 #define INTERFACE_H
 
 #include "tarefa.h"
+#include "raylib.h"
 
-typedef struct {
-    char bufferTexto[MAX_TEXT];
-    int letterCount;
-} StatusInterface;
+typedef enum{
+    Main_Screen,
+    Add_b_Screen,
+    Remove_b_Screen,
+    Clear_b_Screen
 
-void interf_initiate(StatusInterface *status);
-void interf_text_input(StatusInterface *status);
-void interf_draw_text(StatusInterface *status);
-void interf_add_button(StatusInterface *status, ListTasks *lista);
-void interf_draw_list(ListTasks *list);
-void interf_clear_button(ListTasks *list);
+} ScreenState;
+
+typedef struct
+{
+    Texture2D main;
+    Texture2D clikAdd;
+    Texture2D clikRemove;
+    Texture2D clikClear;
+
+}TextureBack;
+
+void initiateInterf(TextureBack *back);
+void updateInterf(ScreenState *state, float *timer, ListTasks *mytask);
+void drawInterf(TextureBack back , ScreenState state,ListTasks mytask);
+void endInterf(TextureBack back);
+
 
 
 #endif
