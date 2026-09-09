@@ -23,6 +23,10 @@ typedef struct {
 
 void list_initiate(ListTasks *list);
 
+bool list_save(const ListTasks *list);
+
+bool list_load(ListTasks *list);
+
 bool list_add(ListTasks *list, const char *description);
 
 bool list_remove(ListTasks *list, int indice);

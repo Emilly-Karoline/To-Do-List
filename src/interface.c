@@ -43,34 +43,44 @@ void updateInterf(ScreenState *state, float *timer, ListTasks *mytask){
 
     if (*state ==  Main_Screen){
       
-        if (CheckCollisionPointRec(mousePos, addButton)&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {  
+        if ((CheckCollisionPointRec(mousePos, addButton)&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT))|| IsKeyPressed(KEY_ENTER)) {  
             *state = Add_b_Screen;
         *timer = 0.50f;
             if (list_add(mytask, textDig)){
+                list_save(mytask);
                 textDig[0]='\0';
                 contLatter=0; } }
     
 
         else if (CheckCollisionPointRec(mousePos,removeButton)&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 *state = Remove_b_Screen;
-            *timer = 0.5f;
+                 *timer = 0.5f;
             if(selecTask!= -1){
-                    list_remove(mytask,selecTask);
-                selecTask=1;} }
+                    if (list_remove(mytask,selecTask)) {
+                        list_save(mytask);
+                    }
+                selecTask=-1;} }
         
         else if(CheckCollisionPointRec(mousePos, clearButton)&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
             *state = Clear_b_Screen;
             *timer = 0.50f;
                 list_clear(mytask);
+            list_save(mytask);
             selecTask=-1;}
     
-        for (int i = 0; i < mytask->quantity; i++){
-            int posY= listArea.y + (i*30);
-            Rectangle checkButton= {listArea.x, posY +2,16,16};
-            if(CheckCollisionPointRec(mousePos,checkButton) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                list_completed(mytask, i); } 
-            else if(CheckCollisionPointRec(mousePos,listArea)&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                selecTask=i; } }
+      for (int i = 0; i < mytask->quantity; i++) {
+    int posY = listArea.y + (i * 30);
+    
+    Rectangle checkButton = {listArea.x, posY + 2, 16, 16};
+    Rectangle taskRow = {listArea.x + 20, posY, listArea.width - 20, 25};
+    if (CheckCollisionPointRec(mousePos, checkButton) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        if (list_completed(mytask, i)) {
+            list_save(mytask);
+        } }
+   
+    else if (CheckCollisionPointRec(mousePos, taskRow) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        selecTask = i; } 
+}
      }
     else{
         *timer -= GetFrameTime();

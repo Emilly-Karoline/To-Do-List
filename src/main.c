@@ -10,6 +10,7 @@ int main(void) {
 
     ListTasks mytask;
     list_initiate(&mytask);
+    list_load(&mytask);
     initiateInterf(&back);
     while (!WindowShouldClose())
     {
